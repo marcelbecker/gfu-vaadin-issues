@@ -1,0 +1,13 @@
+@startuml
+
+abstract class ComponentContainer
+
+abstract class CustomComponent <|-- class MyComponent
+
+MyComponent o-- ComponentContainer
+
+ComponentContainer o-- class Button
+ComponentContainer o-- class TextField
+ComponentContainer o-- class Label
+
+@enduml

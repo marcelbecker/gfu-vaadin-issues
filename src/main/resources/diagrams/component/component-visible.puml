@@ -1,0 +1,16 @@
+@startuml
+
+
+interface Component {
+    boolean isVisible()
+    void setVisible(boolean)
+
+    boolean isEnabled()
+    void setEnabled(boolean)
+
+    boolean isReadonly()
+    void setReadOnly(boolean)
+}
+
+
+@enduml

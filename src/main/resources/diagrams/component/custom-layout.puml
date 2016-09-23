@@ -1,0 +1,14 @@
+@startuml
+
+class CustomLayout
+
+class MyLayout
+
+abstract class AbstractLayout <|-- CustomLayout
+
+CustomLayout <|-- MyLayout
+
+MyLayout o-- VerticalLayout
+MyLayout o-- HorizontalLayout
+
+@enduml

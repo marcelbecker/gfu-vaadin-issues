@@ -1,0 +1,11 @@
+@startuml
+
+
+interface ComponentContainer <|-- abstract class AbstractLayout
+
+interface HasComponents <|-- ComponentContainer
+interface ComponentAttachDetachNotifier <|-- ComponentContainer
+
+
+
+@enduml

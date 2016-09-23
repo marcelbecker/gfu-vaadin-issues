@@ -5,14 +5,14 @@ import com.vaadin.data.fieldgroup.Caption;
 import com.vaadin.data.fieldgroup.FieldGroup;
 import com.vaadin.ui.*;
 import de.gfu.vaadin.MainUI;
-import de.gfu.vaadin.model.Page;
+import de.gfu.vaadin.model.Issue;
 
 import static com.vaadin.ui.themes.ValoTheme.BUTTON_PRIMARY;
 
 /**
  * Created by mbecker on 29.07.2016.
  */
-public class PageForm extends FormLayout {
+public class IssueForm extends FormLayout {
 
     @Caption("Seiteninhalt")
     private RichTextArea content;
@@ -25,17 +25,19 @@ public class PageForm extends FormLayout {
 
     private TextField userName;
 
-    private BeanFieldGroup<Page> fieldGroup;
+    private BeanFieldGroup<Issue> fieldGroup;
 
-    private Page page;
+    private Issue issue;
 
-    public PageForm(Page page) {
-        this.page = page;
+    public IssueForm(Issue issue) {
+        this.issue = issue;
         userName = new TextField("Benutzer");
 
-        fieldGroup = new BeanFieldGroup<>(Page.class);
+        fieldGroup = new BeanFieldGroup<>(Issue.class);
         fieldGroup.buildAndBindMemberFields(this);
-        fieldGroup.setItemDataSource(page);
+        fieldGroup.setItemDataSource(issue);
+
+        content.setNullRepresentation("");
 
         Button cancel = new Button("Verwerfen", this::cancel);
         Button ok = new Button("Speichern", this::ok);
@@ -61,26 +63,26 @@ public class PageForm extends FormLayout {
             Notification.show("Validierung fehlgeschlagen", Notification.Type.ERROR_MESSAGE);
         }
 
-        MainUI.getDatabase().items.save(page);
-        fireEvent(new OkEvent(this, page));
+        MainUI.getDatabase().items.save(issue);
+        fireEvent(new OkEvent(this, issue));
     }
 
     public static class OkEvent extends Component.Event {
 
-        private Page page;
+        private Issue issue;
 
         /**
          * Constructs a new event with the specified source component.
          *
          * @param source the source component of the event
          */
-        public OkEvent(Component source, Page page) {
+        public OkEvent(Component source, Issue issue) {
             super(source);
-            this.page = page;
+            this.issue = issue;
         }
 
-        public Page getPage() {
-            return page;
+        public Issue getIssue() {
+            return issue;
         }
     }
 }

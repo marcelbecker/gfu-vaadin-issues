@@ -4,18 +4,18 @@ import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;
-import de.gfu.vaadin.model.Page;
+import de.gfu.vaadin.model.Issue;
 
 /**
  * Created by mbecker on 29.07.2016.
  */
-public class PageDisplay extends VerticalLayout {
+public class IssueDisplay extends VerticalLayout {
 
     private final Label content;
 
-    private Page page;
+    private Issue issue;
 
-    public PageDisplay(Page page) {
+    public IssueDisplay(Issue issue) {
         setSizeFull();
 
         content = new Label();
@@ -23,16 +23,16 @@ public class PageDisplay extends VerticalLayout {
         addComponent(content);
         setComponentAlignment(content, Alignment.MIDDLE_CENTER);
 
-        setPage(page);
+        setIssue(issue);
     }
 
-    public final void setPage(Page page) {
-        this.page = page;
-        if (page == null) {
+    public final void setIssue(Issue issue) {
+        this.issue = issue;
+        if (issue == null) {
             content.setValue("<span style=\"font-size: 35px;\">Willkommen</span>");
         } else {
-            this.page = page;
-            content.setValue(page.getContent());
+            this.issue = issue;
+            content.setValue(issue.getContent());
         }
     }
 }

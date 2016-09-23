@@ -1,0 +1,29 @@
+@startuml
+
+interface ClientConnector
+
+interface Sizeable
+
+interface Serializable
+
+interface HasComponents {
+  Iterator<Component> iterator();
+}
+
+interface Component {
+
+}
+
+abstract class AbstractComponent
+interface Field
+
+ClientConnector <|-- Component
+Sizeable <|-- Component
+Serializable <|-- Component
+
+
+Component <|-- Field
+Component <|-- HasComponents
+Component <|-- AbstractComponent: <<implements>>
+
+@enduml
