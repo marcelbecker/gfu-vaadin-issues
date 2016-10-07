@@ -1,9 +1,8 @@
 package de.gfu.vaadin.ui.components;
 
-import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.VerticalLayout;
-import de.gfu.vaadin.ui.views.MyTheme;
+import de.gfu.vaadin.theme.MyTheme;
 
 /**
  * Created by mbecker on 29.07.2016.
@@ -22,7 +21,7 @@ public class VerticalActionBar extends VerticalLayout {
         addComponent(logoutButton);
 
         setSizeFull();
-        addStyleName(MyTheme.LEFT_BAR);
+        addStyleName(MyTheme.CssClass.LEFT_BAR);
     }
 
     public void setActionBarListener(ActionBarListener actionBarListener) {

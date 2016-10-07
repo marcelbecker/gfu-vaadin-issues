@@ -8,6 +8,7 @@ import de.gfu.vaadin.model.User;
 
 import static com.vaadin.ui.themes.ValoTheme.BUTTON_FRIENDLY;
 import static com.vaadin.ui.themes.ValoTheme.BUTTON_LINK;
+import static de.gfu.vaadin.support.Users.asHashedPassword;
 
 /**
  * Created by mbecker on 29.07.2016.
@@ -20,7 +21,7 @@ public class UserForm extends FormLayout {
     @Caption("Spitzname")
     private TextField longName;
 
-    private PasswordField password;
+    private PasswordField passwordField;
 
     private User user;
 
@@ -33,13 +34,17 @@ public class UserForm extends FormLayout {
     public UserForm(User user) {
         this.user = user;
 
-        password = new PasswordField("Passwort");
+        passwordField = new PasswordField("Passwort");
         fieldGroup = new BeanFieldGroup<>(User.class);
         fieldGroup.buildAndBindMemberFields(this);
         fieldGroup.setItemDataSource(user);
 
         loginName.setNullRepresentation("");
         longName.setNullRepresentation("");
+
+        passwordField.setImmediate(false);
+        loginName.setImmediate(false);
+        longName.setImmediate(false);
 
         Button registerButton = new Button("Registrieren", this::onRegister);
         registerButton.addStyleName(BUTTON_FRIENDLY);
@@ -50,7 +55,7 @@ public class UserForm extends FormLayout {
         HorizontalLayout buttonGroup = new HorizontalLayout(registerButton, backButton);
 
         addComponent(loginName);
-        addComponent(password);
+        addComponent(passwordField);
         addComponent(longName);
         addComponent(buttonGroup);
     }
@@ -66,11 +71,11 @@ public class UserForm extends FormLayout {
     protected void onRegister(Button.ClickEvent clickEvent) {
         try {
             fieldGroup.commit();
-            password.commit();
+            passwordField.commit();
         } catch (FieldGroup.CommitException e) {
             throw new RuntimeException(e);
         }
-        user.setPassword(password.getValue());
+        user.setPassword(asHashedPassword(passwordField.getValue()));
         okListener.onOk(user);
     }
 

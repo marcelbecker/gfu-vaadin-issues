@@ -14,16 +14,25 @@ public class Database {
 
     private final IdGenerator idGenerator = new IdGenerator();
 
+    Database() {
+    }
 
-    public final Items items = new Items();
-    public final Users users = new Users();
+    private final Items items = new Items();
+    private final Users users = new Users();
 
+    public Items items() {
+        return items;
+    }
 
-    public class Items {
+    public Users users() {
+        return users;
+    }
+
+    class Items {
 
         private final Map<Integer, Item> items = Collections.synchronizedMap(new HashMap<>());
 
-        public void save(Item item) {
+        void save(Item item) {
             Objects.requireNonNull(item);
 
             if (item.getId() == null) {
@@ -33,26 +42,26 @@ public class Database {
             items.put(item.getId(), item);
         }
 
-        public void delete(Item item) {
+        void delete(Item item) {
             Objects.requireNonNull(item);
             Objects.requireNonNull(item.getId());
 
             items.remove(item.getId());
         }
 
-        public Item load(Integer id) {
+        Item load(Integer id) {
             return items.get(id);
         }
 
-        public Collection<Item> loadAll() {
+        Collection<Item> loadAll() {
             return items.values();
         }
     }
 
-    public class Users {
+    class Users {
         private final Map<String, User> users = Collections.synchronizedMap(new HashMap<>());
 
-        public void save(User user) {
+        void save(User user) {
             Objects.requireNonNull(user);
 
             if (users.get(user.getLoginName()) != null) {
@@ -62,7 +71,7 @@ public class Database {
             users.put(user.getLoginName(), user);
         }
 
-        public User load(String loginName) {
+        User load(String loginName) {
             return users.get(loginName);
         }
     }

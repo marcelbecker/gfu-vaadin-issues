@@ -1,9 +1,5 @@
 package de.gfu.vaadin.model;
 
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-import java.util.Arrays;
-
 /**
  * Created by mbecker on 29.07.2016.
  */
@@ -41,19 +37,11 @@ public class User {
         this.loginName = loginName;
     }
 
-    public boolean equalsPassword(String password) {
-        return Arrays.equals(toMd5(password), this.password);
+    public byte[] getPassword() {
+        return password;
     }
 
-    private byte[] toMd5(String password) {
-        try {
-            return MessageDigest.getInstance("MD5").digest(password.getBytes());
-        } catch (NoSuchAlgorithmException e) {
-            throw new RuntimeException("System error. No MD5 algorithm available.");
-        }
-    }
-
-    public void setPassword(String password) {
-        this.password = toMd5(password);
+    public void setPassword(byte[] password) {
+        this.password = password;
     }
 }

@@ -6,23 +6,24 @@ import com.vaadin.ui.UI;
 /**
  * Created by mbecker on 29.07.2016.
  */
-class ViewController {
+public class ViewController {
 
-    public static void registerViews(Navigator navigator) {
-        navigator.addView("", MainView.class);
-        navigator.addView("login", LoginView.class);
-        navigator.addView("register", RegisterView.class);
+    protected static void registerViews(Navigator navigator) {
+        navigator.addView("", ShowIssueView.class);
+        navigator.addView("editIssue", EditIssueView.class);
+        navigator.addView("showIssue", ShowIssueView.class);
+        navigator.setErrorView(ErrorView.class);
     }
 
-    public static void showLoginView() {
-        UI.getCurrent().getNavigator().navigateTo("login");
+    public static void showEditIssueView() {
+        UI.getCurrent().getNavigator().navigateTo("editIssue");
     }
 
-    public static void showMainView() {
-        UI.getCurrent().getNavigator().navigateTo("");
+    public static void showEditIssueView(Integer issueId) {
+        UI.getCurrent().getNavigator().navigateTo("editIssue/" + issueId);
     }
 
-    public static void showRegisterView() {
-        UI.getCurrent().getNavigator().navigateTo("register");
+    public static void showShowIssueView(Integer issueId) {
+        UI.getCurrent().getNavigator().navigateTo("showIssue/" + issueId);
     }
 }
