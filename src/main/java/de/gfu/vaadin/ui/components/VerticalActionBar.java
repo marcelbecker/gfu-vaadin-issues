@@ -14,9 +14,9 @@ public class VerticalActionBar extends VerticalLayout {
     public VerticalActionBar() {
         setSpacing(true);
 
-        addComponent(new Button("Neue Seite", this::onNewPage));
+        addComponent(new Button("Neues Issue", this::onNewPage));
+        addComponent(new Button("Dashboard", this::onIssues));
         addComponent(new Button("Abmelden", this::onLogout));
-        addComponent(new Button("Alle Issues", this::onIssues));
 
         setSizeFull();
         addStyleName(MyTheme.CssClass.LEFT_BAR);

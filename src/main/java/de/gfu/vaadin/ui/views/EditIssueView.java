@@ -3,12 +3,16 @@ package de.gfu.vaadin.ui.views;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.ui.CustomComponent;
+import de.gfu.vaadin.application.SessionObjects;
 import de.gfu.vaadin.model.Issue;
 import de.gfu.vaadin.model.Item;
 import de.gfu.vaadin.persistence.ItemRepository;
 import de.gfu.vaadin.ui.components.forms.IssueForm;
 
 import java.util.Optional;
+
+import static de.gfu.vaadin.application.SessionObjects.currentUser;
+import static de.gfu.vaadin.support.Issues.newIssue;
 
 /**
  * Created by mbecker on 07.10.2016.
@@ -24,9 +28,7 @@ public class EditIssueView extends CustomComponent implements View {
 
         Optional<Item> itemOptional = ItemRepository.findItemById(parameters);
 
-
-        IssueForm issueForm = new IssueForm((Issue) itemOptional.orElse(new Issue()));
-
+        IssueForm issueForm = new IssueForm((Issue) itemOptional.orElse(newIssue(currentUser().get())));
 
         issueForm.addListener((Event okEvent) -> {
             Issue issue = ((IssueForm.OkEvent) okEvent).getIssue();

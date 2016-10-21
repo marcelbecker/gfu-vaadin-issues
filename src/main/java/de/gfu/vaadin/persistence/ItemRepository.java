@@ -2,15 +2,13 @@ package de.gfu.vaadin.persistence;
 
 import de.gfu.vaadin.model.Item;
 
-import java.util.List;
+import java.util.Date;
 import java.util.Optional;
-import java.util.function.Predicate;
 
 import static de.gfu.vaadin.persistence.DatabaseProvider.databaseProviderInstance;
 import static de.gfu.vaadin.support.Numbers.parseNumber;
 import static java.util.Optional.empty;
 import static java.util.Optional.ofNullable;
-import static java.util.stream.Collectors.toList;
 
 /**
  * Created by mbecker on 07.10.2016.
@@ -18,6 +16,10 @@ import static java.util.stream.Collectors.toList;
 public class ItemRepository {
 
     public static void save(Item item) {
+        if (item.getCreated() == null) {
+            item.setCreated(new Date());
+        }
+        item.setUpdated(new Date());
         databaseProviderInstance().get().items().save(item);
     }
 

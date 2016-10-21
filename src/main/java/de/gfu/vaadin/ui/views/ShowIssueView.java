@@ -34,8 +34,6 @@ public class ShowIssueView extends CustomComponent implements View {
 
         Issue issue = (Issue) itemOptional.get();
 
-        IssueDisplay issueDisplay = new IssueDisplay(issue);
-
         IssueForm issueForm = new IssueForm(issue);
         issueForm.setReadOnly(true);
 
@@ -45,7 +43,6 @@ public class ShowIssueView extends CustomComponent implements View {
 
         VerticalLayout compositionRoot = new VerticalLayout(issueForm, editButton);
         compositionRoot.setSpacing(true);
-        compositionRoot.setComponentAlignment(editButton, Alignment.MIDDLE_CENTER);
 
         setCompositionRoot(compositionRoot);
 

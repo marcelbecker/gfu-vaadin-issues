@@ -2,7 +2,6 @@ package de.gfu.vaadin.authentication.ui;
 
 import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.VaadinServletConfiguration;
-import com.vaadin.annotations.Widgetset;
 import com.vaadin.navigator.Navigator;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.server.VaadinServlet;
@@ -20,7 +19,6 @@ import static de.gfu.vaadin.theme.MyTheme.CssClass.VACATION_BACKGROUND;
  * Created by mbecker on 07.10.2016.
  */
 @Theme(MyTheme.NAME)
-@Widgetset("com.vaadin.DefaultWidgetSet")
 public class AuthUI extends UI {
 
     static {

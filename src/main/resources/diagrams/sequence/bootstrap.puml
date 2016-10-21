@@ -1,0 +1,15 @@
+@startuml
+actor User
+boundary Browser
+control VaadinServlet as servlet
+User -> Browser: Enter URL
+Browser -> servlet: HTTP Request
+Browser <- servlet: Bootstrap Page als HTML
+Browser -> servlet: HTTP Request vaadinBootstrap.js
+Browser -> servlet: ... weitere
+Browser <- servlet: vaadinBootstrap.js
+Browser <- servlet: ... weitere
+Browser --> servlet: XHR (Ajax) JSON
+Browser <-- servlet: Inhalte als JSON
+User <-- Browser: Inhalte als HTML
+@enduml

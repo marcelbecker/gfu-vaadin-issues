@@ -21,7 +21,7 @@ public class MainLayout extends CssLayout implements ViewDisplay {
 
         VerticalActionBar actionBar = new VerticalActionBar();
         actionBar.setActionBarListener(getActionBarListener());
-        actionBar.setWidth(19.1f, Unit.PERCENTAGE);
+        actionBar.setSizeUndefined();
 
         mainPanel = new Panel();
         mainPanel.setSizeUndefined();

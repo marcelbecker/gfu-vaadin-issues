@@ -1,10 +1,12 @@
 package de.gfu.vaadin.ui.views;
 
-import com.vaadin.event.MouseEvents;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
+import com.vaadin.server.Responsive;
+import com.vaadin.shared.ui.window.WindowMode;
 import com.vaadin.ui.*;
 import de.gfu.vaadin.model.Issue;
+import de.gfu.vaadin.ui.components.forms.IssueForm;
 
 import static com.vaadin.server.Responsive.makeResponsive;
 import static de.gfu.vaadin.persistence.IssueRepository.findIssuesBy;
@@ -32,17 +34,21 @@ public class IssuesView extends CssLayout implements View  {
     private void addPanel(Issue issue) {
         VerticalLayout layout = new VerticalLayout(new Label(abbreviatedAt(issue.getContent(), 100)));
         Panel panel = new Panel(issue.getTitle(), layout);
-        panel.addClickListener(this::toggleSize);
+        panel.addClickListener(event -> showDetailWindow(issue));
         addComponent(panel);
     }
 
-    private void toggleSize(MouseEvents.ClickEvent event) {
-        Component clickedComponent = event.getComponent();
-        if (0 > clickedComponent.getWidth()) {
-            clickedComponent.setWidth(500, Unit.PIXELS);
-            clickedComponent.setHeight(500, Unit.PIXELS);
-        } else {
-            clickedComponent.setSizeUndefined();
-        }
+    private void showDetailWindow(Issue issue) {
+        Window window = new Window(issue.getTitle());
+        IssueForm issueForm = new IssueForm(issue);
+        issueForm.setReadOnly(true);
+        window.setContent(issueForm);
+        window.setModal(true);
+        window.setWindowMode(WindowMode.NORMAL);
+        window.addStyleName("gfu-issue-detail-window");
+
+        Responsive.makeResponsive(window);
+
+        UI.getCurrent().addWindow(window);
     }
 }

@@ -5,13 +5,12 @@ import com.vaadin.annotations.VaadinServletConfiguration;
 import com.vaadin.annotations.Widgetset;
 import com.vaadin.navigator.Navigator;
 import com.vaadin.navigator.ViewDisplay;
-import com.vaadin.server.Page;
-import com.vaadin.server.VaadinRequest;
-import com.vaadin.server.VaadinServlet;
+import com.vaadin.server.*;
 import com.vaadin.ui.UI;
 import de.gfu.vaadin.theme.MyTheme;
 import de.gfu.vaadin.ui.layout.MainLayout;
 
+import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 
 import static de.gfu.vaadin.application.SessionObjects.currentUser;
@@ -25,7 +24,6 @@ import static de.gfu.vaadin.ui.views.ViewControllerInit.initViewController;
  * overridden to add component to the user interface and initialize non-component functionality.
  */
 @Theme(MyTheme.NAME)
-@Widgetset("com.vaadin.DefaultWidgetSet")
 public class MainUI extends UI {
 
     @Override
@@ -34,6 +32,7 @@ public class MainUI extends UI {
         if (! currentUser().isPresent()) {
             Page.getCurrent().setLocation("/auth/");
             close();
+            return;
         }
 
         MainLayout mainLayout = new MainLayout();
@@ -59,5 +58,11 @@ public class MainUI extends UI {
     @WebServlet(urlPatterns = "/access/*", name = "AccessServlet", asyncSupported = true)
     @VaadinServletConfiguration(ui = MainUI.class, productionMode = false)
     public static class MyUIServlet extends VaadinServlet {
+        @Override
+        protected void servletInitialized() throws ServletException {
+            super.servletInitialized();
+            getService()
+                    .addSessionInitListener(event -> event.getSession().addBootstrapListener(new MediaQueryActivation()));
+        }
     }
 }
