@@ -24,7 +24,7 @@ import static de.gfu.vaadin.theme.MyTheme.CssClass.VACATION_BACKGROUND;
 public class AuthUI extends UI {
 
     static {
-        DefaultDataSetup.withDefaultData();
+        DefaultDataSetup.withDefaultUser();
     }
 
     @Override

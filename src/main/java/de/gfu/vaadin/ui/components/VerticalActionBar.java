@@ -14,11 +14,9 @@ public class VerticalActionBar extends VerticalLayout {
     public VerticalActionBar() {
         setSpacing(true);
 
-        Button newPage = new Button("Neue Seite", this::onNewPage);
-        Button logoutButton = new Button("Abmelden", this::onLogout);
-
-        addComponent(newPage);
-        addComponent(logoutButton);
+        addComponent(new Button("Neue Seite", this::onNewPage));
+        addComponent(new Button("Abmelden", this::onLogout));
+        addComponent(new Button("Alle Issues", this::onIssues));
 
         setSizeFull();
         addStyleName(MyTheme.CssClass.LEFT_BAR);
@@ -36,9 +34,14 @@ public class VerticalActionBar extends VerticalLayout {
         actionBarListener.onNewPage();
     }
 
+    private void onIssues(Button.ClickEvent clickEvent) {
+        actionBarListener.onIssuesPage();
+    }
+
     public static interface ActionBarListener {
         void onLogOut();
         void onNewPage();
+        void onIssuesPage();
     }
 
 }

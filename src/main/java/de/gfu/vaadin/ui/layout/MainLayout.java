@@ -47,6 +47,11 @@ public class MainLayout extends CssLayout implements ViewDisplay {
             public void onNewPage() {
                 ViewController.showEditIssueView();
             }
+
+            @Override
+            public void onIssuesPage() {
+                ViewController.showShowIssueView();
+            }
         };
     }
 

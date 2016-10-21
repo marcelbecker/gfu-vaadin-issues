@@ -61,4 +61,35 @@
       overflow-y: scroll;
   }
 
+  .gfu-dashboard {
+
+      .v-label {
+          white-space: normal;
+          text-overflow: ellipsis;
+          overflow: hidden;
+          min-width: 250px;
+      }
+
+      .v-panel-content {
+          overflow: hidden;
+      }
+
+      &[width-range~="-640px"] .v-panel {
+          width: 100%;
+          height: 100px;
+      }
+
+      &[width-range~="640-860px"] .v-panel {
+            width: calc(50% - 20px);
+            margin: 10px;
+            height: 200px;
+      }
+
+      &[width-range~="860px-"] .v-panel {
+            width: calc(33% - 20px);
+            margin: 10px;
+            height: 200px;
+      }
+  }
+
 }
