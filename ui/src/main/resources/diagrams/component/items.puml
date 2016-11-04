@@ -1,0 +1,35 @@
+@startuml
+
+interface Item {
+  Property getItemProperty(Object id)
+  Collection<?> getItemPropertyIds()
+
+  boolean addItemProperty(Object id, Property property)
+  boolean removeItemProperty(Object id)
+}
+interface Property {
+  T getValue()
+  setValue(T newValue)
+  Class<? extends T> getType()
+
+  boolean isReadOnly()
+  void setReadOnly(boolean newStatus)
+}
+interface Container {
+  Item getItem(Object itemId)
+  Item addItem(Object itemId)
+  boolean removeItem(Object itemId)
+
+  Collection<?> getItemIds()
+  boolean removeAllItems()
+
+  Class<?> getType(Object propertyId)
+}
+
+Container o-right- Item
+
+Property --o Item
+
+
+
+@enduml
