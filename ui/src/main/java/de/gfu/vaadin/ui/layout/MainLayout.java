@@ -2,9 +2,7 @@ package de.gfu.vaadin.ui.layout;
 
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewDisplay;
-import com.vaadin.ui.Component;
-import com.vaadin.ui.CssLayout;
-import com.vaadin.ui.Panel;
+import com.vaadin.ui.*;
 import de.gfu.vaadin.authentication.AuthenticationController;
 import de.gfu.vaadin.theme.MyTheme;
 import de.gfu.vaadin.ui.components.VerticalActionBar;
@@ -33,6 +31,22 @@ public class MainLayout extends CssLayout implements ViewDisplay {
 
         addStyleName(MyTheme.CssClass.VACATION_BACKGROUND);
         setSizeFull();
+        GridLayout grid = new GridLayout();
+        for (int i = 0; i < 3; i++) {
+            grid.addComponent(new Button("Col " + (grid.getCursorX() + 1)));
+        }
+
+        AbsoluteLayout absoluteLayout = new AbsoluteLayout();
+        absoluteLayout.addComponent(mainPanel, "");
+
+        // A 400x250 pixels size layout
+        AbsoluteLayout layout = new AbsoluteLayout();
+        layout.setWidth("400px");
+        layout.setHeight("250px");
+
+// A component with coordinates for its top-left corner
+        TextField text = new TextField("Somewhere someplace");
+        layout.addComponent(text, "left: 50px; top: 50px;");
 
     }
 

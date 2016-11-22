@@ -116,6 +116,12 @@ public class LoginForm extends CustomComponent {
         loginName.commit();
         password.commit();
 
+        User user = new User();
+        BeanItem<User> userBeanItem = new BeanItem<>(user);
+
+        loginName.setPropertyDataSource(userBeanItem.getItemProperty("loginName"));
+        loginName.setPropertyDataSource(userBeanItem.getItemProperty("password"));
+
         String loginName = this.loginName.getValue();
         String password = this.password.getValue();
 

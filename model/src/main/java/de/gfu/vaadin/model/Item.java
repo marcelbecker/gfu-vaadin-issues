@@ -19,6 +19,10 @@ public abstract class Item {
         return id;
     }
 
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public User getUser() {
         return user;
     }
@@ -43,7 +47,13 @@ public abstract class Item {
         this.updated = updated;
     }
 
-    void setId(int id) {
-        this.id = id;
+    @Override
+    public String toString() {
+        return "Item{" +
+                "id=" + id +
+                ", user=" + user +
+                ", created=" + created +
+                ", updated=" + updated +
+                '}';
     }
 }

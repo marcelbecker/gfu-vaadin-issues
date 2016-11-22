@@ -49,13 +49,13 @@ public class UserForm extends FormLayout {
         loginName.setImmediate(false);
         longName.setImmediate(false);
 
-        Table table = new Table("Accounts", new BeanItemContainer<>(Account.class));
-        Item item = table.addItem(new Account("t.account", "Test", "Person", "t@mail.com"));
-addComponent(table);
-        BeanFieldGroup<Account> accountFG = new BeanFieldGroup<>(Account.class);
-        accountFG.setItemDataSource(item);
-        Field<?> field = accountFG.buildAndBind("Benutzername", "benutzername");
-        addComponent(field);
+//        Table table = new Table("Accounts", new BeanItemContainer<>(Account.class));
+//        Item item = table.addItem(new Account("t.account", "Test", "Person", "t@mail.com"));
+//addComponent(table);
+//        BeanFieldGroup<Account> accountFG = new BeanFieldGroup<>(Account.class);
+//        accountFG.setItemDataSource(item);
+//        Field<?> field = accountFG.buildAndBind("Benutzername", "benutzername");
+//        addComponent(field);
 
         Button registerButton = new Button("Registrieren", this::onRegister);
         registerButton.addStyleName(BUTTON_FRIENDLY);

@@ -1,10 +1,11 @@
 package de.gfu.vaadin.support;
 
 import de.gfu.vaadin.model.Issue;
+import de.gfu.vaadin.model.Status;
+import de.gfu.vaadin.model.Type;
 import de.gfu.vaadin.model.User;
 
-import java.util.Arrays;
-import java.util.List;
+import static de.gfu.vaadin.model.Type.TASK;
 
 /**
  * Created by mbecker on 21.10.2016.
@@ -15,16 +16,12 @@ public class Issues {
         Issue issue = new Issue();
         issue.setUser(user);
         issue.setStatus(defaultStatus());
+        issue.setType(TASK);
         return issue;
     }
 
-    public static String defaultStatus() {
-        return allStatus().iterator().next();
-    }
-
-    public static List<String> allStatus() {
-        return Arrays.asList(
-                "Neu", "In Arbeit", "Fertig");
+    public static Status defaultStatus() {
+        return Status.values()[0];
     }
 
 }

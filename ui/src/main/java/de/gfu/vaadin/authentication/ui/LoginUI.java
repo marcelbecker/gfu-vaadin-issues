@@ -3,7 +3,7 @@ package de.gfu.vaadin.authentication.ui;
 import com.vaadin.annotations.PreserveOnRefresh;
 import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.VaadinServletConfiguration;
-import com.vaadin.navigator.Navigator;
+import com.vaadin.navigator.*;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.server.VaadinServlet;
 import com.vaadin.ui.*;
@@ -21,7 +21,7 @@ import static de.gfu.vaadin.theme.MyTheme.CssClass.VACATION_BACKGROUND;
  */
 @Theme(MyTheme.NAME)
 @PreserveOnRefresh
-public class AuthUI extends UI {
+public class LoginUI extends UI {
 
     static {
         DefaultDataSetup.withDefaultUser();
@@ -47,8 +47,8 @@ public class AuthUI extends UI {
         VerticalLayout verticalLayout = new VerticalLayout(panel);
         verticalLayout.setSizeFull();
         verticalLayout.setComponentAlignment(panel, Alignment.MIDDLE_CENTER);
-        setContent(verticalLayout);
-//        setContent(new LoginView());
+//        setContent(verticalLayout);
+        setContent(new LoginView());
     }
 
     @Override
@@ -70,7 +70,7 @@ public class AuthUI extends UI {
     }
 
     @WebServlet(urlPatterns = "/login/*", name = "AuthServlet", asyncSupported = true)
-    @VaadinServletConfiguration(ui = AuthUI.class, productionMode = true, heartbeatInterval = 15)
+    @VaadinServletConfiguration(ui = LoginUI.class, productionMode = true, heartbeatInterval = 15)
     public static class AuthUIServlet extends VaadinServlet {
     }
 

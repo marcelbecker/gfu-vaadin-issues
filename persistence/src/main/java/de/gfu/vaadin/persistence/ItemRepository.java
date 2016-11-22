@@ -15,7 +15,12 @@ import static java.util.Optional.ofNullable;
  */
 public class ItemRepository {
 
+    public static void clear() {
+        databaseProviderInstance().get().items().clear();
+    }
+
     public static void save(Item item) {
+        System.out.println("Saving item " + item.toString());
         if (item.getCreated() == null) {
             item.setCreated(new Date());
         }

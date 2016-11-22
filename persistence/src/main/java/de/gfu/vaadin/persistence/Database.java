@@ -1,7 +1,6 @@
 package de.gfu.vaadin.persistence;
 
 
-import de.gfu.vaadin.model.IdGenerator;
 import de.gfu.vaadin.model.Item;
 import de.gfu.vaadin.model.User;
 
@@ -36,7 +35,7 @@ public class Database {
             Objects.requireNonNull(item);
 
             if (item.getId() == null) {
-                idGenerator.nextId(item);
+                item.setId(idGenerator.nextId(item));
             }
 
             items.put(item.getId(), item);
@@ -55,6 +54,10 @@ public class Database {
 
         Collection<Item> loadAll() {
             return items.values();
+        }
+
+        public void clear() {
+            items.clear();
         }
     }
 

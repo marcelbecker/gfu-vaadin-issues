@@ -5,10 +5,10 @@ import com.vaadin.data.fieldgroup.Caption;
 import com.vaadin.data.fieldgroup.FieldGroup;
 import com.vaadin.ui.*;
 import de.gfu.vaadin.model.Issue;
+import de.gfu.vaadin.model.Status;
 
 import static com.vaadin.ui.Notification.Type.ERROR_MESSAGE;
 import static com.vaadin.ui.themes.ValoTheme.BUTTON_PRIMARY;
-import static de.gfu.vaadin.support.Issues.allStatus;
 
 /**
  * Created by mbecker on 29.07.2016.
@@ -42,7 +42,7 @@ public class IssueForm extends FormLayout {
         this.issue = issue;
 
         status = new ComboBox("Status");
-        status.addItems(allStatus());
+        status.addItems(Status.values());
         status.setNullSelectionAllowed(false);
 
         fieldGroup = new BeanFieldGroup<>(Issue.class);

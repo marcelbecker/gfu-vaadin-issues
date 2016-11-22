@@ -2,6 +2,7 @@ package de.gfu.vaadin.authentication.view;
 
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
+import com.vaadin.server.ClientConnector;
 import com.vaadin.server.Page;
 import com.vaadin.ui.*;
 import de.gfu.vaadin.model.User;
@@ -56,5 +57,20 @@ public class RegisterView extends VerticalLayout implements View {
             notification.setPosition(TOP_CENTER);
             notification.show(Page.getCurrent());
         }
+    }
+
+    @Override
+    public void attach() {
+        super.attach();
+    }
+
+    @Override
+    public void detach() {
+        super.detach();
+    }
+
+    @Override
+    public void addAttachListener(AttachListener listener) {
+        super.addAttachListener(listener);
     }
 }

@@ -3,10 +3,8 @@ package de.gfu.vaadin.authentication.view;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.server.UserError;
-import com.vaadin.ui.Alignment;
-import com.vaadin.ui.Panel;
-import com.vaadin.ui.UI;
-import com.vaadin.ui.VerticalLayout;
+import com.vaadin.shared.ui.window.WindowMode;
+import com.vaadin.ui.*;
 import de.gfu.vaadin.authentication.AuthenticationController;
 import de.gfu.vaadin.model.User;
 import de.gfu.vaadin.theme.MyTheme;
@@ -31,12 +29,23 @@ public class LoginView extends VerticalLayout implements View {
         loginForm.setLoginListener(this::onLogin);
         loginForm.setRegisterListener(this::onRegister);
 
-        Panel panel = new Panel("Anmeldung", loginForm);
-        panel.addStyleName(MyTheme.CssClass.CENTER_PANEL);
-        panel.setSizeUndefined();
 
-        addComponent(panel);
-        setComponentAlignment(panel, Alignment.MIDDLE_CENTER);
+        Panel loginPanel = new Panel("Anmeldung", loginForm);
+        loginPanel.addStyleName(MyTheme.CssClass.CENTER_PANEL);
+        loginPanel.setSizeUndefined();
+
+        Panel registerPanel = new Panel("Registrieren", loginForm);
+        registerPanel.addStyleName(MyTheme.CssClass.CENTER_PANEL);
+        registerPanel.setSizeUndefined();
+
+        TabSheet tabSheet = new TabSheet();
+        tabSheet.addTab(loginPanel, "Login");
+        tabSheet.addTab(registerPanel, "Registrieren");
+
+        HorizontalLayout horizonalLayout = new HorizontalLayout(tabSheet);
+        horizonalLayout.setSizeFull();
+        addComponent(horizonalLayout);
+        setComponentAlignment(horizonalLayout, Alignment.MIDDLE_CENTER);
 
         setSpacing(true);
         setSizeFull();
@@ -55,5 +64,11 @@ public class LoginView extends VerticalLayout implements View {
             show(LOGIN_FAILED_MESSAGE);
             loginForm.setComponentError(new UserError(LOGIN_FAILED_MESSAGE));
         }
+    }
+
+    @Override
+    public void detach() {
+        super.detach();
+        System.out.println("DETACH LOGINVIEW");
     }
 }
