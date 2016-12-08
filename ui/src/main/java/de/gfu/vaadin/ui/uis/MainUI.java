@@ -10,6 +10,7 @@ import com.vaadin.server.SessionInitEvent;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.server.VaadinServlet;
 import com.vaadin.ui.UI;
+import de.gfu.vaadin.persistence.DefaultDataSetup;
 import de.gfu.vaadin.theme.MyTheme;
 import de.gfu.vaadin.ui.layout.MainLayout;
 import de.gfu.vaadin.ui.views.ViewController;
@@ -33,12 +34,12 @@ public class MainUI extends UI {
 
     @Override
     protected void init(VaadinRequest vaadinRequest) {
-
-        if (! currentUser().isPresent()) {
-            Page.getCurrent().setLocation("/login/");
-            close();
-            return;
-        }
+        DefaultDataSetup.withDefaultData();
+//        if (! currentUser().isPresent()) {
+//            Page.getCurrent().setLocation("/login/");
+//            close();
+//            return;
+//        }
 
 
         /**
