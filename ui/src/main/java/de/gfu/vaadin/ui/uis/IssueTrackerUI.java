@@ -12,6 +12,7 @@ import com.vaadin.data.validator.StringLengthValidator;
 import com.vaadin.event.ItemClickEvent;
 import com.vaadin.navigator.Navigator;
 import com.vaadin.server.*;
+import com.vaadin.server.communication.FileUploadHandler;
 import com.vaadin.shared.Position;
 import com.vaadin.shared.ui.datefield.Resolution;
 import com.vaadin.ui.*;
@@ -24,13 +25,18 @@ import de.gfu.vaadin.persistence.IssueRepository;
 import de.gfu.vaadin.persistence.ItemRepository;
 import de.gfu.vaadin.support.Predicates;
 import de.gfu.vaadin.theme.MyTheme;
+import de.gfu.vaadin.ui.components.ToggleComponent;
 
 import javax.servlet.annotation.WebServlet;
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.util.*;
 import java.util.Calendar;
 
 import static com.vaadin.shared.ui.datefield.Resolution.DAY;
+import static de.gfu.vaadin.application.SessionObjects.setCurrentUser;
 import static de.gfu.vaadin.application.SessionObjects.stubUser;
 import static de.gfu.vaadin.support.Issues.newIssue;
 import static de.gfu.vaadin.theme.MyTheme.CssClass.VACATION_BACKGROUND;
@@ -123,8 +129,8 @@ public class IssueTrackerUI extends UI {
         IssueFormLayout issueFormLayout = new IssueFormLayout(issue);
 
         issueFormLayout.addDoneListener(event -> {
-            window.close();
-            if (((IssueFormLayout.DoneEvent) event).getResultType() == SAVE) {
+            if (event instanceof IssueFormLayout.DoneEvent && ((IssueFormLayout.DoneEvent) event).getResultType() == SAVE) {
+                window.close();
                 if (container.containsId(issue)) {
                     table.refreshRowCache();
                 } else {
@@ -146,6 +152,9 @@ public class IssueTrackerUI extends UI {
 
         public IssueFormLayout(Issue issue) {
 
+            setSpacing(true);
+            setMargin(true);
+
             fieldGroup = new BeanFieldGroup<>(Issue.class);
             fieldGroup.setItemDataSource(issue);
             IssueForm issueForm = new IssueForm();
@@ -154,9 +163,13 @@ public class IssueTrackerUI extends UI {
 //            fieldGroup.bind(issueForm.user, "user.longName");
             fieldGroup.bind(issueForm.longName, "user.longName");
 
-            addComponents(issueForm.title, issueForm.type, issueForm.content, issueForm.deadline,
-                    issueForm.created, issueForm.longName);
+            HorizontalLayout layout = new HorizontalLayout(issueForm.created, issueForm.longName);
+            layout.setSpacing(true);
 
+            addComponents(issueForm.title, issueForm.type, issueForm.content, issueForm.deadline,
+                    layout);
+
+            issueForm.content.setHeight(13, Unit.EM);
 
             issueForm.created.setReadOnly(true);
             issueForm.longName.setReadOnly(true);
@@ -183,41 +196,51 @@ public class IssueTrackerUI extends UI {
             horizontalLayout.setSpacing(true);
             addComponents(horizontalLayout);
 
-            // Find the application directory
-            String basepath = VaadinService.getCurrent()
-                    .getBaseDirectory().getAbsolutePath();
 
-// Image as a file resource
-            FileResource resource = new FileResource(new File(basepath +
-                    "/WEB-INF/images/vaadin.png"));
+            UploadListener uploadReceiver = new UploadListener(this);
+            Upload upload = new Upload("Anhänge", uploadReceiver);
+            upload.addFinishedListener(uploadReceiver);
+            upload.setButtonCaption("Anhang hochladen");
 
-            ThemeResource themeResource = new ThemeResource("images/vacation.jpg");
-
-            ExternalResource externalResource = new ExternalResource("http://www.gfu.net");
-            ExternalResource internalResource = new ExternalResource("/aus");
-
-// Show the image in the application
-            Image image = new Image("Image from file", resource);
-            Image themeImage = new Image("Image from file", themeResource);
-
-// Let the user view the file in browser or download it
-            Link link = new Link("Link to the image file", resource);
-            Link externalLink = new Link("Link to the image file", externalResource);
-
-            addComponents(new Link("Aus", internalResource));
-            FileDownloader fileDownloader = new FileDownloader(resource);
-            Button downloadBtn = new Button("Download");
-            fileDownloader.extend(downloadBtn);
-            addComponents(downloadBtn);
-
-            setWidthUndefined();
-            setSpacing(true);
-            setMargin(true);
+            HorizontalLayout layout1 = new HorizontalLayout(upload);
+            layout1.setSpacing(true);
+            layout1.setMargin(true);
+            addComponent(upload);
 
         }
 
 
+        static class UploadListener implements Upload.Receiver, Upload.FinishedListener {
 
+            File uploadFile;
+
+            ComponentContainer componentContainer;
+
+            String filename;
+            String mimeType;
+
+            public UploadListener(ComponentContainer componentContainer) {
+                this.componentContainer = componentContainer;
+            }
+
+            @Override
+            public OutputStream receiveUpload(String filename, String mimeType) {
+                this.filename = filename;
+                this.mimeType = mimeType;
+                try {
+                    return new FileOutputStream(uploadFile = File.createTempFile(filename, "tmp"));
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+
+            @Override
+            public void uploadFinished(Upload.FinishedEvent event) {
+                Button button = new Button("Download " + filename);
+                new FileDownloader(new FileResource(uploadFile)).extend(button);
+                componentContainer.replaceComponent(event.getUpload(), button);
+            }
+        }
 
         private void onSave(Button.ClickEvent event) {
             try {
