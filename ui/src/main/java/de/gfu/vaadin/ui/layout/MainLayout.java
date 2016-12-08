@@ -36,8 +36,8 @@ public class MainLayout extends CssLayout implements ViewDisplay {
             grid.addComponent(new Button("Col " + (grid.getCursorX() + 1)));
         }
 
-        AbsoluteLayout absoluteLayout = new AbsoluteLayout();
-        absoluteLayout.addComponent(mainPanel, "");
+//        AbsoluteLayout absoluteLayout = new AbsoluteLayout();
+//        absoluteLayout.addComponent(mainPanel, "");
 
         // A 400x250 pixels size layout
         AbsoluteLayout layout = new AbsoluteLayout();
