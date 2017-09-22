@@ -32,7 +32,7 @@ public class SessionObjects {
         if (stubUser == null) {
             stubUser = new User();
             stubUser.setLoginName("bernd");
-            stubUser.setPassword(Users.asHashedPassword("brot"));
+            stubUser.setPassword("brot");
             stubUser.setLoginName("Bernd das Brot");
         }
         return stubUser;

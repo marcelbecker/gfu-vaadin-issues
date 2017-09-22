@@ -6,6 +6,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 /**
+ *
  * Created by mbecker on 07.10.2016.
  */
 public class Users {
@@ -13,7 +14,7 @@ public class Users {
     public static User firstUser() {
         User user = new User();
         user.setLoginName("foo");
-        user.setPassword(asHashedPassword("bar"));
+        user.setPassword("bar");
         user.setLongName("Foo Bar");
         return user;
     }
