@@ -1,6 +1,7 @@
 package de.gfu.vaadin.model;
 
 /**
+ *
  * Created by mbecker on 29.07.2016.
  */
 public class User {
@@ -11,7 +12,7 @@ public class User {
 
     private String loginName;
 
-    private byte[] password;
+    private String password;
 
     public String getLongName() {
         return longName;
@@ -37,11 +38,11 @@ public class User {
         this.loginName = loginName;
     }
 
-    public byte[] getPassword() {
+    public String getPassword() {
         return password;
     }
 
-    public void setPassword(byte[] password) {
+    public void setPassword(String password) {
         this.password = password;
     }
 }
