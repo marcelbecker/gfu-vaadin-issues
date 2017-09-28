@@ -2,15 +2,19 @@ package de.gfu.vaadin.ui;
 
 import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.VaadinServletConfiguration;
+import com.vaadin.data.BeanValidationBinder;
 import com.vaadin.data.Binder;
+import com.vaadin.data.ValidationResult;
 import com.vaadin.data.converter.LocalDateToDateConverter;
 import com.vaadin.data.converter.StringToDateConverter;
 import com.vaadin.data.provider.DataProvider;
+import com.vaadin.data.validator.RangeValidator;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.server.VaadinServlet;
 import com.vaadin.ui.*;
 import de.gfu.vaadin.application.SessionObjects;
 import de.gfu.vaadin.model.Issue;
+import de.gfu.vaadin.model.Type;
 import de.gfu.vaadin.model.User;
 import de.gfu.vaadin.persistence.DefaultDataSetup;
 import de.gfu.vaadin.persistence.IssueRepository;
@@ -21,6 +25,7 @@ import de.gfu.vaadin.theme.MyTheme;
 import de.gfu.vaadin.ui.forms.IssueForm;
 
 import javax.servlet.annotation.WebServlet;
+import java.util.Date;
 import java.util.List;
 
 import static de.gfu.vaadin.theme.MyTheme.CssClass.VACATION_BACKGROUND;
@@ -80,7 +85,7 @@ public class IssueTrackerUI extends UI {
 
         final IssueForm form = new IssueForm();
 
-        Binder<Issue> issueBinder = new Binder<>(Issue.class);
+        Binder<Issue> issueBinder = new BeanValidationBinder<>(Issue.class);
 
         issueBinder.forField(form.created)
                 .withNullRepresentation("")
@@ -88,11 +93,18 @@ public class IssueTrackerUI extends UI {
                 .bind(Issue::getCreated, Issue::setCreated);
         issueBinder.forField(form.deadline)
                 .withConverter(new LocalDateToDateConverter())
+                .withValidator(new RangeValidator<>("Max. 10 Tage in der Zukunft.",
+                        Date::compareTo, new Date(), maxDateInTheFuture(10)))
                 .bind(Issue::getDeadline, Issue::setDeadline);
         issueBinder
                 .bind(form.user,
                         (issue) -> issue.getUser().getLongName(),
                         (issue, name) -> issue.getUser().setLongName(name));
+        issueBinder.forField(form.type)
+                .withValidator((value, context) -> value == Type.BUG
+                        ? ValidationResult.error("Keine Bugs!")
+                        : ValidationResult.ok())
+                .bind(Issue::getType, Issue::setType);
 
         issueBinder.bindInstanceFields(form);
         issueBinder.setBean(i);
@@ -127,6 +139,10 @@ public class IssueTrackerUI extends UI {
 
         getUI().addWindow(window);
 
+    }
+
+    private Date maxDateInTheFuture(int days) {
+        return new Date(new Date().getTime() + (1000*60*60*24*days));
     }
 
     @WebServlet(urlPatterns = "/issues/*", name = "IssueTrackerServlet", asyncSupported = true)
