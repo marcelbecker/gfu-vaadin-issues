@@ -1,10 +1,12 @@
 package de.gfu.vaadin.model;
 
+import java.util.Observable;
+
 /**
  *
  * Created by mbecker on 29.07.2016.
  */
-public class User {
+public class User extends Observable {
 
     private String longName;
 
@@ -20,6 +22,8 @@ public class User {
 
     public void setLongName(String longName) {
         this.longName = longName;
+        setChanged();
+        notifyObservers();
     }
 
     public byte[] getIcon() {
@@ -28,6 +32,8 @@ public class User {
 
     public void setIcon(byte[] icon) {
         this.icon = icon;
+        setChanged();
+        notifyObservers();
     }
 
     public String getLoginName() {
@@ -36,6 +42,8 @@ public class User {
 
     public void setLoginName(String loginName) {
         this.loginName = loginName;
+        setChanged();
+        notifyObservers();
     }
 
     public String getPassword() {
@@ -44,5 +52,7 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+        setChanged();
+        notifyObservers();
     }
 }
