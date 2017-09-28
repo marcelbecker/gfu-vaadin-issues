@@ -1,5 +1,7 @@
 package de.gfu.vaadin.ui.components;
 
+import com.vaadin.event.ShortcutAction;
+import com.vaadin.server.UserError;
 import com.vaadin.ui.*;
 import com.vaadin.ui.themes.ValoTheme;
 
@@ -11,6 +13,10 @@ import static de.gfu.vaadin.theme.MyTheme.CssClass.CENTER_PANEL;
 public class LoginComponent extends CustomComponent {
 
     private final Panel panel;
+    private final TextField loginField;
+    private final PasswordField passwordField;
+    private final Button loginButton;
+    private final Button registerButton;
 
     public LoginComponent() {
 
@@ -18,18 +24,31 @@ public class LoginComponent extends CustomComponent {
         setSizeUndefined();
 
 
-        final TextField loginField = new TextField("Anmeldename");
+        loginField = new TextField("Anmeldename");
+        loginField.addBlurListener(e -> getPasswordField().clear());
 
 
-        final PasswordField passwordField = new PasswordField("Passwort");
+        passwordField = new PasswordField("Passwort");
 
 
-        final Button loginButton = new Button("Anmelden");
+        loginButton = new Button("Anmelden", this::onLogin);
         loginButton.addStyleName(ValoTheme.BUTTON_FRIENDLY);
+        loginButton.setClickShortcut(ShortcutAction.KeyCode.ENTER);
 
 
-        final Button registerButton = new Button("Registrieren");
+        registerButton = new Button("Registrieren", this::onRegister);
         registerButton.addStyleName(ValoTheme.BUTTON_LINK);
+
+
+        // Aufgabe b)
+        // loginButton.addClickListener(this::handleButtonClicks);
+        // registerButton.addClickListener(this::handleButtonClicks);
+
+
+        // Aufgabe e)
+//        loginButton.addListener(Button.ClickEvent.class,
+//                (Button.ClickListener) this::onLogin,
+//                Button.ClickListener.BUTTON_CLICK_METHOD);
 
 
         final FormLayout formLayout = new FormLayout(loginField, passwordField,
@@ -49,5 +68,42 @@ public class LoginComponent extends CustomComponent {
     @Override
     public void setCaption(String caption) {
         panel.setCaption(caption);
+    }
+
+    private void onLogin(Button.ClickEvent e) {
+        final String loginFieldValue = loginField.getValue();
+        final String passwordFieldValue = passwordField.getValue();
+
+        if ("foo".equals(loginFieldValue)
+                && "bar".equals(passwordFieldValue)) {
+            Notification.show("Anmeldung erfolgreich!");
+
+        } else {
+            Notification.show("Anmeldung fehlgeschlagen!");
+            passwordField.setComponentError(new UserError("Anmeldename und / oder Passwort unbekannt."));
+        }
+
+        passwordField.clear();
+    }
+
+    private void onRegister(Button.ClickEvent e) {
+        Notification.show("Registrierung nicht möglich.");
+    }
+
+    // Aufgabe b)
+    private void handleButtonClicks(Button.ClickEvent e) {
+
+        if (e.getButton() == loginButton) {
+            onLogin(e);
+        }
+
+        if (e.getButton() == registerButton) {
+            onRegister(e);
+        }
+
+    }
+
+    private PasswordField getPasswordField() {
+        return passwordField;
     }
 }
