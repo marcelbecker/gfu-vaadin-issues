@@ -1,9 +1,11 @@
 package de.gfu.vaadin.ui.components;
 
+import com.vaadin.data.Binder;
 import com.vaadin.event.ShortcutAction;
 import com.vaadin.server.UserError;
 import com.vaadin.ui.*;
 import com.vaadin.ui.themes.ValoTheme;
+import de.gfu.vaadin.model.User;
 
 import static de.gfu.vaadin.theme.MyTheme.CssClass.CENTER_PANEL;
 
@@ -12,11 +14,18 @@ import static de.gfu.vaadin.theme.MyTheme.CssClass.CENTER_PANEL;
  */
 public class LoginComponent extends CustomComponent {
 
+
+    /**
+     * Fields
+     */
+    private final TextField loginName;
+    private final PasswordField password;
+
+
     private final Panel panel;
-    private final TextField loginField;
-    private final PasswordField passwordField;
     private final Button loginButton;
     private final Button registerButton;
+    private final Binder<User> userBinding = new Binder<>(User.class);
 
     public LoginComponent() {
 
@@ -24,11 +33,23 @@ public class LoginComponent extends CustomComponent {
         setSizeUndefined();
 
 
-        loginField = new TextField("Anmeldename");
-        loginField.addBlurListener(e -> getPasswordField().clear());
+        loginName = new TextField("Anmeldename");
+        loginName.addBlurListener(e -> getPassword().clear());
 
 
-        passwordField = new PasswordField("Passwort");
+        password = new PasswordField("Passwort");
+
+
+        userBinding.setBean(new User());
+        userBinding.bindInstanceFields(this);
+
+
+//        Aufgabe a)
+//        userBinding.forField(loginField)
+//                .bind(User::getLoginName, User::setLoginName);
+//
+//        userBinding.forField(passwordField)
+//                .bind(User::getPassword, User::setPassword);
 
 
         loginButton = new Button("Anmelden", this::onLogin);
@@ -51,7 +72,7 @@ public class LoginComponent extends CustomComponent {
 //                Button.ClickListener.BUTTON_CLICK_METHOD);
 
 
-        final FormLayout formLayout = new FormLayout(loginField, passwordField,
+        final FormLayout formLayout = new FormLayout(loginName, password,
                 new HorizontalLayout(loginButton, registerButton));
 
 
@@ -71,19 +92,18 @@ public class LoginComponent extends CustomComponent {
     }
 
     private void onLogin(Button.ClickEvent e) {
-        final String loginFieldValue = loginField.getValue();
-        final String passwordFieldValue = passwordField.getValue();
+        final User user = userBinding.getBean();
 
-        if ("foo".equals(loginFieldValue)
-                && "bar".equals(passwordFieldValue)) {
+        if ("foo".equals(user.getLoginName())
+                && "bar".equals(user.getPassword())) {
             Notification.show("Anmeldung erfolgreich!");
 
         } else {
             Notification.show("Anmeldung fehlgeschlagen!");
-            passwordField.setComponentError(new UserError("Anmeldename und / oder Passwort unbekannt."));
+            password.setComponentError(new UserError("Anmeldename und / oder Passwort unbekannt."));
         }
 
-        passwordField.clear();
+        password.clear();
     }
 
     private void onRegister(Button.ClickEvent e) {
@@ -103,7 +123,7 @@ public class LoginComponent extends CustomComponent {
 
     }
 
-    private PasswordField getPasswordField() {
-        return passwordField;
+    private PasswordField getPassword() {
+        return password;
     }
 }
