@@ -6,7 +6,9 @@ import com.vaadin.annotations.VaadinServletConfiguration;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.server.VaadinServlet;
 import com.vaadin.ui.*;
+import com.vaadin.ui.themes.ValoTheme;
 import de.gfu.vaadin.theme.MyTheme;
+import de.gfu.vaadin.ui.components.LoginComponent;
 
 import javax.servlet.annotation.WebServlet;
 
@@ -26,14 +28,12 @@ public class LoginUI extends UI {
 
         addStyleName(VACATION_BACKGROUND);
 
-        Panel panel = new Panel();
-        panel.addStyleName(CENTER_PANEL);
-        panel.setContent(new Label("Hier kommt noch was hin :)"));
-        panel.setSizeUndefined();
+        final LoginComponent loginComponent = new LoginComponent();
 
-        VerticalLayout verticalLayout = new VerticalLayout(panel);
+        VerticalLayout verticalLayout = new VerticalLayout(loginComponent);
         verticalLayout.setSizeFull();
-        verticalLayout.setComponentAlignment(panel, Alignment.MIDDLE_CENTER);
+        verticalLayout.setComponentAlignment(loginComponent,
+                Alignment.MIDDLE_CENTER);
 
         setContent(verticalLayout);
     }
