@@ -14,7 +14,7 @@ public class DefaultDataSetup {
     public static void withDefaultUser() {
         User defaultUser = new User();
         defaultUser.setLoginName("mb");
-        defaultUser.setPassword(Users.asHashedPassword("mb"));
+        defaultUser.setPassword("mb");
 
         UserRepository.save(defaultUser);
     }
