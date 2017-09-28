@@ -33,7 +33,7 @@ public class SessionObjects {
             stubUser = new User();
             stubUser.setLoginName("bernd");
             stubUser.setPassword("brot");
-            stubUser.setLoginName("Bernd das Brot");
+            stubUser.setLongName("Bernd das Brot");
         }
         return stubUser;
     }
