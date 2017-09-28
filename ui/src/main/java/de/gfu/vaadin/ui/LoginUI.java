@@ -1,5 +1,6 @@
 package de.gfu.vaadin.ui;
 
+import com.vaadin.annotations.PreserveOnRefresh;
 import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.VaadinServletConfiguration;
 import com.vaadin.server.VaadinRequest;
@@ -17,6 +18,7 @@ import static de.gfu.vaadin.theme.MyTheme.CssClass.VACATION_BACKGROUND;
  * Created by mbecker on 07.10.2016.
  */
 @Theme(MyTheme.NAME)
+@PreserveOnRefresh
 public class LoginUI extends UI {
 
     @Override
@@ -36,8 +38,32 @@ public class LoginUI extends UI {
         setContent(verticalLayout);
     }
 
+    @Override
+    public void close() {
+        super.close();
+        System.out.println("closing UI " + this);
+    }
+
+    @Override
+    protected void refresh(VaadinRequest request) {
+        super.refresh(request);
+        System.out.println("refreshing UI " + this);
+    }
+
+    @Override
+    public void detach() {
+        super.detach();
+        System.out.println("detaching UI " + this);
+    }
+
+    @Override
+    public void attach() {
+        super.attach();
+        System.out.println("attaching UI " + this);
+    }
+
     @WebServlet(urlPatterns = "/login/*", name = "LoginServlet", asyncSupported = true)
-    @VaadinServletConfiguration(ui = LoginUI.class, productionMode = true, heartbeatInterval = 15)
+    @VaadinServletConfiguration(ui = LoginUI.class, productionMode = false, heartbeatInterval = 300)
     public static class LoginUIServlet extends VaadinServlet {}
 
     @WebServlet(urlPatterns = "/VAADIN/*", name = "VaadinBootstrapServlet")
