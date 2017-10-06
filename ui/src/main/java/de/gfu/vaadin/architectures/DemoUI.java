@@ -22,11 +22,11 @@ public class DemoUI extends UI {
     @Override
     protected void init(VaadinRequest request) {
 
-//        final de.gfu.vaadin.architectures.passiveview.MeterView passiveView =
-//                new de.gfu.vaadin.architectures.passiveview.MeterView();
-//
-//        final de.gfu.vaadin.architectures.supervisingcontroller.MeterView supervisingController =
-//                new de.gfu.vaadin.architectures.supervisingcontroller.MeterView();
+        final de.gfu.vaadin.architectures.passiveview.MeterView passiveView =
+                new de.gfu.vaadin.architectures.passiveview.MeterView();
+
+        final de.gfu.vaadin.architectures.supervisingcontroller.MeterView supervisingController =
+                new de.gfu.vaadin.architectures.supervisingcontroller.MeterView();
 
         final MeterView naiveView = new MeterView();
 
