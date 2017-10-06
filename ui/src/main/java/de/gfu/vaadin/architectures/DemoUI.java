@@ -22,17 +22,17 @@ public class DemoUI extends UI {
     @Override
     protected void init(VaadinRequest request) {
 
-        final de.gfu.vaadin.architectures.passiveview.MeterView passiveView =
-                new de.gfu.vaadin.architectures.passiveview.MeterView();
-
-        final de.gfu.vaadin.architectures.supervisingcontroller.MeterView supervisingController =
-                new de.gfu.vaadin.architectures.supervisingcontroller.MeterView();
+//        final de.gfu.vaadin.architectures.passiveview.MeterView passiveView =
+//                new de.gfu.vaadin.architectures.passiveview.MeterView();
+//
+//        final de.gfu.vaadin.architectures.supervisingcontroller.MeterView supervisingController =
+//                new de.gfu.vaadin.architectures.supervisingcontroller.MeterView();
 
         final MeterView naiveView = new MeterView();
 
         final Panel panel = new Panel("Zählerstände");
-        panel.setContent(supervisingController);
-        panel.addStyleName(MyTheme.CssClasses.CENTER_PANEL);
+        panel.setContent(naiveView);
+        panel.addStyleName(MyTheme.CssClass.CENTER_PANEL);
         panel.setSizeUndefined();
 
         VerticalLayout verticalLayout = new VerticalLayout(panel);
