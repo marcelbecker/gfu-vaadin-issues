@@ -6,6 +6,7 @@ import com.vaadin.server.VaadinRequest;
 import com.vaadin.server.VaadinServlet;
 import com.vaadin.ui.*;
 import de.gfu.vaadin.theme.MyTheme;
+import org.openqa.selenium.support.PageFactory;
 
 import javax.servlet.annotation.WebServlet;
 
@@ -17,17 +18,29 @@ import static de.gfu.vaadin.theme.MyTheme.CssClass.VACATION_BACKGROUND;
  * Created by mbecker on 07.10.2016.
  */
 @Theme(MyTheme.NAME)
-public class LoginUI extends UI {
+public class DemoUI extends UI {
 
     @Override
     protected void init(VaadinRequest request) {
 
-        addStyleName(VACATION_BACKGROUND);
+//        addStyleName(VACATION_BACKGROUND);
+
+        final Label label = new Label("");
+        label.setId("early-learning-label");
+
+        final ComboBox<String> comboBox = new ComboBox<>("ComboBox");
+        comboBox.setId("early-learnings");
+        comboBox.setItems("Mama", "Papa", "Auto", "Ball", "Katze", "Hund");
+        comboBox.addSelectionListener(s -> label.setValue(s.getValue()));
+
 
         Panel panel = new Panel();
         panel.addStyleName(CENTER_PANEL);
-        panel.setContent(new Label("Hier kommt noch was hin :)"));
         panel.setSizeUndefined();
+        panel.setContent(new VerticalLayout(
+                comboBox,
+                label
+        ));
 
         VerticalLayout verticalLayout = new VerticalLayout(panel);
         verticalLayout.setSizeFull();
@@ -36,9 +49,9 @@ public class LoginUI extends UI {
         setContent(verticalLayout);
     }
 
-    @WebServlet(urlPatterns = "/login/*", name = "LoginServlet", asyncSupported = true)
-    @VaadinServletConfiguration(ui = LoginUI.class, productionMode = true, heartbeatInterval = 15)
-    public static class LoginUIServlet extends VaadinServlet {}
+    @WebServlet(urlPatterns = "/demo/*", name = "DemoServlet", asyncSupported = true)
+    @VaadinServletConfiguration(ui = DemoUI.class, productionMode = true)
+    public static class DemoUIServlet extends VaadinServlet {}
 
     @WebServlet(urlPatterns = "/VAADIN/*", name = "VaadinBootstrapServlet")
     public static class VaadinBootstrapServlet extends VaadinServlet {}
