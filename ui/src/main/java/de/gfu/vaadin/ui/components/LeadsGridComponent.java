@@ -3,15 +3,40 @@ package de.gfu.vaadin.ui.components;
 import com.vaadin.data.Binder;
 import com.vaadin.ui.*;
 import de.gfu.vaadin.model.Lead;
+import de.gfu.vaadin.model.LeadsService;
 import de.gfu.vaadin.model.LeadsSynchronization;
+
+import java.util.List;
 
 /**
  *
  * Created by MBecker on 09.10.2017.
  */
-public class LeadsGridComponent extends CustomComponent {
+public class LeadsGridComponent extends CustomComponent implements LeadsSynchronization.LeadListener {
 
-     class LeadForm {
+    private final Grid<Lead> grid;
+    private final LeadsService service;
+
+    @Override
+    public void update(List<Lead> leads) {
+        final UI ui = getUI();
+        if (ui == null) {
+            throw new RuntimeException("This should not happen!");
+        }
+
+        System.out.println("Updating UI " + ui);
+
+        // This is necessary, because ... TODO
+        ui.access( () -> grid.setItems(leads) );
+    }
+
+    @Override
+    public void detach() {
+        super.detach();
+        LeadsSynchronization.removeListener(this);
+    }
+
+    class LeadForm {
          TextField source = new TextField("Quelle");
          RichTextArea description = new RichTextArea("Beschreibung");
          ComboBox<String> status = new ComboBox<>("Status");
@@ -19,14 +44,17 @@ public class LeadsGridComponent extends CustomComponent {
     }
 
 
-    public LeadsGridComponent() {
+    public LeadsGridComponent(LeadsService service) {
+        this.service = service;
 
-        final Grid<Lead> grid = new Grid<>(Lead.class);
-        grid.setItems(LeadsSynchronization.getLeads());
+        LeadsSynchronization.addListener(this);
+
+        grid = new Grid<>(Lead.class);
+        grid.setItems(service.leads());
 
         grid.addItemClickListener(event -> {
             if (event.getMouseEventDetails().isDoubleClick()) {
-                LeadsSynchronization.remove(event.getItem());
+                service.remove(event.getItem());
                 getUI().addWindow(new Window("Info", new Label("Lead gelöscht!")));
             }
         });
@@ -39,13 +67,17 @@ public class LeadsGridComponent extends CustomComponent {
 
         leadForm.status.setItems("Offen", "In Bearbeitung", "Fertig");
 
-        setCompositionRoot(new VerticalLayout(grid, new FormLayout(
+        final VerticalLayout verticalLayout = new VerticalLayout(new FormLayout(
                 leadForm.source,
                 leadForm.description,
                 leadForm.status,
                 leadForm.date,
-                new Button("Hinzufügen", e -> LeadsSynchronization.addLead(leadBinder.getBean()))
-        )));
+                new Button("Hinzufügen", e -> service.add(leadBinder.getBean()))
+        ), grid);
+
+        verticalLayout.setSizeUndefined();
+
+        setCompositionRoot(verticalLayout);
 
     }
 
