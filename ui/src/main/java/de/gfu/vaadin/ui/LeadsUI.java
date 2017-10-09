@@ -49,7 +49,8 @@ public class LeadsUI extends UI {
         });
 
         final Button extendMeButton = new Button("Extend me!");
-        DisableOnClickButtonExtension.extend(extendMeButton);
+        new DisableOnClickButtonExtension("Hallo Welt!", 13)
+                .extend(extendMeButton);
 
         final Button gc = new Button("GC", e -> System.gc());
 

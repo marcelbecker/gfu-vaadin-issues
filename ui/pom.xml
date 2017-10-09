@@ -37,14 +37,14 @@
             <groupId>com.vaadin</groupId>
             <artifactId>vaadin-server</artifactId>
         </dependency>
-        <dependency>
-            <groupId>com.vaadin</groupId>
-            <artifactId>vaadin-client</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.vaadin</groupId>
-            <artifactId>vaadin-client-compiler</artifactId>
-        </dependency>
+        <!--<dependency>-->
+            <!--<groupId>com.vaadin</groupId>-->
+            <!--<artifactId>vaadin-client</artifactId>-->
+        <!--</dependency>-->
+        <!--<dependency>-->
+            <!--<groupId>com.vaadin</groupId>-->
+            <!--<artifactId>vaadin-client-compiler</artifactId>-->
+        <!--</dependency>-->
         <dependency>
             <groupId>com.vaadin</groupId>
             <artifactId>vaadin-push</artifactId>
@@ -68,10 +68,10 @@
         <!--
           We use an already compiled version of the default built-in widgets.
         -->
-        <dependency>
-            <groupId>com.vaadin</groupId>
-            <artifactId>vaadin-client-compiled</artifactId>
-        </dependency>
+        <!--<dependency>-->
+            <!--<groupId>com.vaadin</groupId>-->
+            <!--<artifactId>vaadin-client-compiled</artifactId>-->
+        <!--</dependency>-->
         <!--
           Needed when using the widgetset optimizer (custom ConnectorBundleLoaderFactory).
 

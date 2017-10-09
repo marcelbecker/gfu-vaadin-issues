@@ -25,10 +25,22 @@ public class DisableOnClickButtonConnector extends AbstractExtensionConnector {
         final Widget widget = ((ComponentConnector) serverConnector).getWidget();
         final VButton vButton = (VButton) widget;
 
-        String pleaseWaitLabel = "Please wait...";
+        final String pleaseWaitLabel;
+        if (getState().pleaseWaitLabel != null) {
+            pleaseWaitLabel = getState().pleaseWaitLabel;
+        } else {
+            pleaseWaitLabel = "Please wait...";
+        }
+
+        final int key;
+        if (getState().shortCutKey != null) {
+            key = getState().shortCutKey;
+        } else {
+            key = -1;
+        }
 
         RootPanel.get().addDomHandler(keyDownEvent -> {
-            if (keyDownEvent.getNativeKeyCode() == 13) {
+            if (keyDownEvent.getNativeKeyCode() == key) {
                 transform(vButton, pleaseWaitLabel);
             }
         }, KeyDownEvent.getType());
@@ -36,6 +48,11 @@ public class DisableOnClickButtonConnector extends AbstractExtensionConnector {
         vButton.addClickHandler(clickEvent -> {
             transform(vButton, pleaseWaitLabel);
         });
+    }
+
+    @Override
+    public DisableOnClickButtonSharedState getState() {
+        return (DisableOnClickButtonSharedState) super.getState();
     }
 
     private void transform(VButton vButton, String label) {

@@ -9,6 +9,6 @@ import com.vaadin.shared.communication.SharedState;
 public class DisableOnClickButtonSharedState extends SharedState {
 
     public String pleaseWaitLabel;
-    public int shortCutKey;
+    public Integer shortCutKey;
 
 }
