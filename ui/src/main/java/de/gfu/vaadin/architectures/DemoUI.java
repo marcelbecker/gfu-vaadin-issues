@@ -34,6 +34,7 @@ public class DemoUI extends UI {
         panel.setContent(naiveView);
         panel.addStyleName(MyTheme.CssClass.CENTER_PANEL);
         panel.setSizeUndefined();
+        panel.setHeight(100, Unit.PERCENTAGE);
 
         VerticalLayout verticalLayout = new VerticalLayout(panel);
         verticalLayout.setSizeFull();
