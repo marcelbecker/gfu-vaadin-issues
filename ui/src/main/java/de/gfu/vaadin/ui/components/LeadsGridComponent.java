@@ -16,18 +16,11 @@ public class LeadsGridComponent extends CustomComponent implements LeadsSynchron
 
     private final Grid<Lead> grid;
     private final LeadsService service;
+    private final Binder<Lead> leadBinder;
 
     @Override
     public void update(List<Lead> leads) {
-        final UI ui = getUI();
-        if (ui == null) {
-            throw new RuntimeException("This should not happen!");
-        }
-
-        System.out.println("Updating UI " + ui);
-
-        // This is necessary, because ... TODO
-        ui.access( () -> grid.setItems(leads) );
+        grid.setItems(leads);
     }
 
     @Override
@@ -54,14 +47,13 @@ public class LeadsGridComponent extends CustomComponent implements LeadsSynchron
 
         grid.addItemClickListener(event -> {
             if (event.getMouseEventDetails().isDoubleClick()) {
-                service.remove(event.getItem());
-                getUI().addWindow(new Window("Info", new Label("Lead gelöscht!")));
+                onDeleteLead(event.getItem());
             }
         });
 
         final LeadForm leadForm = new LeadForm();
 
-        final Binder<Lead> leadBinder = new Binder<>(Lead.class);
+        leadBinder = new Binder<>(Lead.class);
         leadBinder.bindInstanceFields(leadForm);
         leadBinder.setBean(new Lead());
 
@@ -72,7 +64,7 @@ public class LeadsGridComponent extends CustomComponent implements LeadsSynchron
                 leadForm.description,
                 leadForm.status,
                 leadForm.date,
-                new Button("Hinzufügen", e -> service.add(leadBinder.getBean()))
+                new Button("Hinzufügen", e -> onAddLead())
         ), grid);
 
         verticalLayout.setSizeUndefined();
@@ -81,6 +73,15 @@ public class LeadsGridComponent extends CustomComponent implements LeadsSynchron
 
     }
 
+    void onDeleteLead(Lead lead) {
+        service.remove(lead);
+        getUI().addWindow(new Window("Info", new Label("Lead gelöscht!")));
+    }
+
+    void onAddLead() {
+        service.add(leadBinder.getBean());
+        leadBinder.setBean(new Lead());
+    }
 
 
 }

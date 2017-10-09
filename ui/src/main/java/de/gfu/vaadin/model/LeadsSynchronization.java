@@ -1,6 +1,6 @@
 package de.gfu.vaadin.model;
 
-import de.gfu.vaadin.ui.components.LeadsGridComponent;
+import com.vaadin.ui.UI;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -27,7 +27,8 @@ public class LeadsSynchronization {
     }
 
     public static void removeListener(LeadListener leadListener) {
-        final Optional<WeakReference<LeadListener>> any = listeners.stream().filter(wl -> wl.get() == leadListener)
+        final Optional<WeakReference<LeadListener>> any = listeners.stream()
+                .filter(wl -> wl.get() == leadListener)
                 .findAny();
         any.ifPresent( l -> listeners.remove(l));
     }
@@ -37,7 +38,7 @@ public class LeadsSynchronization {
 
         listeners.forEach(l -> {
             ofNullable(l.get()).ifPresent(listener -> {
-                listener.update(leads);
+                update(listener, leads);
             });
         });
     }
@@ -47,7 +48,7 @@ public class LeadsSynchronization {
 
             listeners.forEach(l -> {
                 ofNullable(l.get()).ifPresent(listener -> {
-                    listener.update(leads);
+                    update(listener, leads);
                 });
             });
         }
@@ -57,9 +58,23 @@ public class LeadsSynchronization {
         return Collections.unmodifiableList(leads);
     }
 
+    static void update(LeadListener leadListener, List<Lead> leads) {
+        final UI ui = leadListener.getUI();
+        if (ui == null) {
+            throw new RuntimeException("This should not happen!");
+        }
+
+        System.out.println("Updating UI " + ui);
+
+        // This is necessary, because ... TODO
+        ui.access( () -> leadListener.update(leads) );
+    }
+
     public interface LeadListener {
 
         void update(List<Lead> leads);
+
+        UI getUI();
 
     }
 }

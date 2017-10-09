@@ -3,34 +3,18 @@ package de.gfu.vaadin.model;
 import java.time.LocalDate;
 
 /**
+ *
  * Created by MBecker on 09.10.2017.
  */
-public class Lead {
-
+public class MasterLead {
     private String source;
     private String description;
     private String status;
     private LocalDate date;
 
-    private Customer customer;
+    private String customer;
 
-    private Company company;
-
-    public Customer getCustomer() {
-        return customer;
-    }
-
-    public void setCustomer(Customer customer) {
-        this.customer = customer;
-    }
-
-    public Company getCompany() {
-        return company;
-    }
-
-    public void setCompany(Company company) {
-        this.company = company;
-    }
+    private String company;
 
     public String getSource() {
         return source;
@@ -62,5 +46,21 @@ public class Lead {
 
     public void setDate(LocalDate date) {
         this.date = date;
+    }
+
+    public String getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(String customer) {
+        this.customer = customer;
+    }
+
+    public String getCompany() {
+        return company;
+    }
+
+    public void setCompany(String company) {
+        this.company = company;
     }
 }

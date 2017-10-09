@@ -3,6 +3,7 @@ package de.gfu.vaadin;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.ui.Grid;
+import com.vaadin.ui.UI;
 import de.gfu.vaadin.model.Lead;
 import de.gfu.vaadin.model.LeadsSynchronization;
 
@@ -27,5 +28,10 @@ public class LeadsView implements View, LeadsSynchronization.LeadListener {
     @Override
     public void update(List<Lead> leads) {
         grid.setItems(leads);
+    }
+
+    @Override
+    public UI getUI() {
+        return null;
     }
 }

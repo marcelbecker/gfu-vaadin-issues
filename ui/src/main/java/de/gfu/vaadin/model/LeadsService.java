@@ -3,6 +3,7 @@ package de.gfu.vaadin.model;
 import java.util.List;
 
 /**
+ *
  * Created by MBecker on 09.10.2017.
  */
 public class LeadsService {
