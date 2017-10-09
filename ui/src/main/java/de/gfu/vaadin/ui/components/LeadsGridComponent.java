@@ -31,7 +31,7 @@ public class LeadsGridComponent extends CustomComponent implements LeadsSynchron
 
     class LeadForm {
          TextField source = new TextField("Quelle");
-         RichTextArea description = new RichTextArea("Beschreibung");
+         TextField description = new TextField("Beschreibung");
          ComboBox<String> status = new ComboBox<>("Status");
          DateField date = new DateField("Datum");
     }
@@ -43,6 +43,8 @@ public class LeadsGridComponent extends CustomComponent implements LeadsSynchron
         LeadsSynchronization.addListener(this);
 
         grid = new Grid<>(Lead.class);
+        grid.setCaption("Aktuelle Leads");
+        grid.setWidth(800, Unit.PIXELS);
         grid.setItems(service.leads());
 
         grid.addItemClickListener(event -> {
@@ -59,17 +61,18 @@ public class LeadsGridComponent extends CustomComponent implements LeadsSynchron
 
         leadForm.status.setItems("Offen", "In Bearbeitung", "Fertig");
 
-        final VerticalLayout verticalLayout = new VerticalLayout(new FormLayout(
+        final FormLayout formLayout = new FormLayout(
                 leadForm.source,
                 leadForm.description,
                 leadForm.status,
                 leadForm.date,
                 new Button("Hinzufügen", e -> onAddLead())
-        ), grid);
+        );
+        formLayout.setCaption("Neuer Lead");
 
-        verticalLayout.setSizeUndefined();
+        final HorizontalLayout horizontalLayout = new HorizontalLayout(formLayout, grid);
 
-        setCompositionRoot(verticalLayout);
+        setCompositionRoot(horizontalLayout);
 
     }
 

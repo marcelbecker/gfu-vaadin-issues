@@ -40,8 +40,8 @@ public class LeadsUI extends UI {
         Panel panel = new Panel();
         panel.addStyleName(CENTER_PANEL);
         panel.setContent(leadsGridComponent);
-        panel.setHeight(80, Unit.PERCENTAGE);
-        panel.setWidth(50, Unit.PERCENTAGE);
+        panel.setSizeUndefined();
+//        panel.setHeight(100, Unit.PERCENTAGE);
 
 
         final Button detachButton = new Button("Detach", e -> {
@@ -51,7 +51,12 @@ public class LeadsUI extends UI {
         final Button gc = new Button("GC", e -> System.gc());
 
         final HorizontalLayout buttons = new HorizontalLayout(detachButton, gc);
+        buttons.setSizeUndefined();
+
         final VerticalLayout centralLayout = new VerticalLayout(buttons, panel);
+        centralLayout.setWidth(80, Unit.PERCENTAGE);
+        centralLayout.setExpandRatio(buttons, 0);
+        centralLayout.setExpandRatio(panel, 10);
 
         VerticalLayout verticalLayout = new VerticalLayout(centralLayout);
         verticalLayout.setSizeFull();
