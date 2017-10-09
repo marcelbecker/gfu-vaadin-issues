@@ -60,11 +60,11 @@
           Needed when compiling your own widget sets each time you want to
           build your project.
         -->
-        <!--<dependency>-->
-        <!--<groupId>com.vaadin</groupId>-->
-        <!--<artifactId>vaadin-client</artifactId>-->
-        <!--<scope>provided</scope>-->
-        <!--</dependency>-->
+        <dependency>
+            <groupId>com.vaadin</groupId>
+            <artifactId>vaadin-client</artifactId>
+            <scope>provided</scope>
+        </dependency>
         <!--
           We use an already compiled version of the default built-in widgets.
         -->
