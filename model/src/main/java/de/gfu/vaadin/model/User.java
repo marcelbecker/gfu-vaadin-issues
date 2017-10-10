@@ -6,7 +6,7 @@ import java.util.Observable;
  *
  * Created by mbecker on 29.07.2016.
  */
-public class User extends Observable {
+public class User {
 
     private String longName;
 
@@ -22,8 +22,6 @@ public class User extends Observable {
 
     public void setLongName(String longName) {
         this.longName = longName;
-        setChanged();
-        notifyObservers();
     }
 
     public byte[] getIcon() {
@@ -32,8 +30,6 @@ public class User extends Observable {
 
     public void setIcon(byte[] icon) {
         this.icon = icon;
-        setChanged();
-        notifyObservers();
     }
 
     public String getLoginName() {
@@ -42,8 +38,6 @@ public class User extends Observable {
 
     public void setLoginName(String loginName) {
         this.loginName = loginName;
-        setChanged();
-        notifyObservers();
     }
 
     public String getPassword() {
@@ -52,7 +46,5 @@ public class User extends Observable {
 
     public void setPassword(String password) {
         this.password = password;
-        setChanged();
-        notifyObservers();
     }
 }

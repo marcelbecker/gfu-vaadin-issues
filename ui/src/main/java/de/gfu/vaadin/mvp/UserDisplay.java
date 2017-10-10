@@ -12,7 +12,7 @@ import java.util.Observer;
 /**
  * Created by MBecker on 26.09.2017.
  */
-public class UserDisplay extends CustomComponent implements Observer {
+public class UserDisplay extends CustomComponent {
 
 
     private final Label longNameLabel;
@@ -38,9 +38,4 @@ public class UserDisplay extends CustomComponent implements Observer {
         passwordLabel.setValue("***");
     }
 
-    @Override
-    public void update(Observable o, Object arg) {
-        User user = (User) o;
-        update(user);
-    }
 }

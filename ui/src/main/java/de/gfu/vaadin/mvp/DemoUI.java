@@ -25,7 +25,6 @@ public class DemoUI extends UI {
         final User user = new User();
         final UserFormComponent content = new UserFormComponent(user, new Backend());
         final UserDisplay userDisplay = new UserDisplay(user);
-        user.addObserver(userDisplay);
 
         VerticalLayout verticalLayout = new VerticalLayout(content, userDisplay, new MobileTextField());
         verticalLayout.setSizeFull();

@@ -17,12 +17,9 @@ public class MobileTextField extends CustomComponent {
 
     public MobileTextField() {
 
-        final MobileTextFieldPresenter presenter =
-                new MobileTextFieldPresenter(this);
-
         textField = new TextField();
         clearButton = new Button("X");
-        clearButton.addClickListener(e -> presenter.onClearButtonClick());
+        clearButton.addClickListener(e -> clearText());
         setCompositionRoot(new HorizontalLayout(textField, clearButton));
 
     }
@@ -31,18 +28,4 @@ public class MobileTextField extends CustomComponent {
         textField.clear();
     }
 
-    /**
-     * Presenter class for {@link MobileTextField}.
-     */
-    static class MobileTextFieldPresenter {
-        private final MobileTextField mobileTextField;
-
-        MobileTextFieldPresenter(MobileTextField mobileTextField) {
-            this.mobileTextField = mobileTextField;
-        }
-
-        void onClearButtonClick() {
-            mobileTextField.clearText();
-        }
-    }
 }
