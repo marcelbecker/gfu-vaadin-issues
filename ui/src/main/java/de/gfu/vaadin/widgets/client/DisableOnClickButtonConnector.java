@@ -4,13 +4,10 @@ import com.google.gwt.event.dom.client.KeyDownEvent;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.vaadin.client.ComponentConnector;
-import com.vaadin.client.ConnectorMap;
 import com.vaadin.client.ServerConnector;
 import com.vaadin.client.communication.RpcProxy;
 import com.vaadin.client.extensions.AbstractExtensionConnector;
 import com.vaadin.client.ui.VButton;
-import com.vaadin.client.ui.button.ButtonConnector;
-import com.vaadin.client.ui.orderedlayout.VAbstractOrderedLayout;
 import com.vaadin.shared.ui.Connect;
 import com.vaadin.shared.ui.button.ButtonServerRpc;
 import de.gfu.vaadin.widgets.DisableOnClickButtonExtension;
@@ -65,7 +62,9 @@ public class DisableOnClickButtonConnector extends AbstractExtensionConnector {
         vButton.setEnabled(false);
         vButton.addStyleName(DISABLED_CLASSNAME);
         vButton.setText(label);
-        RpcProxy.create(MyComponentServerRpc.class, this).disabled();
+
+//        RpcProxy.create(MyComponentServerRpc.class, this).disabled();
+        RpcProxy.create(ButtonServerRpc.class, serverConnector).disableOnClick();
     }
 
 

@@ -55,10 +55,14 @@ public class LeadsUI extends UI {
             System.out.println("Enabled? " + extendMeButton.isEnabled());
         });
 
+        final Button disableMe = new Button("Disable me");
+        disableMe.setDisableOnClick(true);
+        disableMe.addClickListener( e -> System.out.println("Is button enabled? " + disableMe.isEnabled()) );
+
         final Button gc = new Button("GC", e -> System.gc());
 
         final HorizontalLayout buttons =
-                new HorizontalLayout(detachButton, gc, extendMeButton);
+                new HorizontalLayout(detachButton, gc, extendMeButton, disableMe);
         buttons.setSizeUndefined();
 
         final VerticalLayout centralLayout = new VerticalLayout(buttons, panel);
