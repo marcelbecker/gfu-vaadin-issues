@@ -14,7 +14,6 @@ import de.gfu.vaadin.ui.components.LeadsGridComponent;
 import de.gfu.vaadin.widgets.DisableOnClickButtonExtension;
 
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebInitParam;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -52,6 +51,10 @@ public class LeadsUI extends UI {
         new DisableOnClickButtonExtension("Hallo Welt!", 13)
                 .extend(extendMeButton);
 
+        extendMeButton.addClickListener(e -> {
+            System.out.println("Enabled? " + extendMeButton.isEnabled());
+        });
+
         final Button gc = new Button("GC", e -> System.gc());
 
         final HorizontalLayout buttons =
@@ -62,6 +65,10 @@ public class LeadsUI extends UI {
         centralLayout.setWidth(80, Unit.PERCENTAGE);
         centralLayout.setExpandRatio(buttons, 0);
         centralLayout.setExpandRatio(panel, 10);
+
+        centralLayout.addLayoutClickListener(e -> {
+            System.out.println("Button enabled? " + extendMeButton.isEnabled());
+        });
 
         VerticalLayout verticalLayout = new VerticalLayout(centralLayout);
         verticalLayout.setSizeFull();

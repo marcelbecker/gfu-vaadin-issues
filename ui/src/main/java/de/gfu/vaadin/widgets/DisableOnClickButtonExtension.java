@@ -2,7 +2,9 @@ package de.gfu.vaadin.widgets;
 
 import com.vaadin.server.AbstractClientConnector;
 import com.vaadin.server.AbstractExtension;
+import com.vaadin.ui.Component;
 import de.gfu.vaadin.widgets.client.DisableOnClickButtonSharedState;
+import de.gfu.vaadin.widgets.client.MyComponentServerRpc;
 
 /**
  *
@@ -28,10 +30,14 @@ public class DisableOnClickButtonExtension extends AbstractExtension {
         super.extend(target);
         getState().pleaseWaitLabel = pleaseWaitLabel;
         getState().shortCutKey = shortCutKey;
+        registerRpc((MyComponentServerRpc) () ->
+                ((Component) target).setEnabled(false));
     }
 
     @Override
     protected DisableOnClickButtonSharedState getState() {
         return (DisableOnClickButtonSharedState) super.getState();
     }
+
+
 }
