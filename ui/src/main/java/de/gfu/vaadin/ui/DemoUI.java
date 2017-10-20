@@ -6,12 +6,10 @@ import com.vaadin.server.VaadinRequest;
 import com.vaadin.server.VaadinServlet;
 import com.vaadin.ui.*;
 import de.gfu.vaadin.theme.MyTheme;
-import org.openqa.selenium.support.PageFactory;
 
 import javax.servlet.annotation.WebServlet;
 
 import static de.gfu.vaadin.theme.MyTheme.CssClass.CENTER_PANEL;
-import static de.gfu.vaadin.theme.MyTheme.CssClass.VACATION_BACKGROUND;
 
 /**
  *
