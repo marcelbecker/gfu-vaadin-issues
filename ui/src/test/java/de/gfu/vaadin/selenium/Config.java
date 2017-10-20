@@ -6,14 +6,24 @@ import java.io.File;
 import java.net.URISyntaxException;
 
 /**
+ * Entry point for configuration properties.
+ *
  *
  * Created by MBecker on 07.10.2017.
  */
 public class Config {
 
-    public static final String BASE_URL = "http://localhost:38080/";
+
     public static final FirefoxSetup firefoxSetup = new FirefoxSetup();
 
+
+    static final String BASE_URL = "http://localhost:38080/";
+
+
+    /**
+     * Firefox setup, provides a working {@link FirefoxDriver}, ready for use in
+     * tests. Tests are responsible for closing the driver.
+     */
     public static class FirefoxSetup {
         static {
             // Hier wird der Gecko-Driver für Firefox referenziert.
@@ -22,7 +32,9 @@ public class Config {
         }
 
         public FirefoxDriver newDriver() {
-            return new FirefoxDriver();
+            final FirefoxDriver firefoxDriver = new FirefoxDriver();
+            firefoxDriver.get(BASE_URL);
+            return firefoxDriver;
         }
     }
 

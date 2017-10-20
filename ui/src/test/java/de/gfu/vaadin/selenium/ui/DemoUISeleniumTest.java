@@ -1,10 +1,13 @@
 package de.gfu.vaadin.selenium.ui;
 
 import de.gfu.vaadin.selenium.Config;
+import de.gfu.vaadin.selenium.pages.DemoPage;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openqa.selenium.firefox.FirefoxDriver;
+
+import static org.junit.Assert.assertEquals;
 
 /**
  *
