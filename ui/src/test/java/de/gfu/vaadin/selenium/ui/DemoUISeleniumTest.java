@@ -21,7 +21,14 @@ public class DemoUISeleniumTest {
     public void test() throws Exception {
 
 
-        // todo: Hierhin kommt der Test
+        final DemoPage demoPage = new DemoPage(driver)
+                .navigateTo();
+
+        assertEquals("", demoPage.getLabel().getText());
+
+        demoPage.getEarlyLearningsComboBox().select("Katze");
+
+        assertEquals("Katze", demoPage.getLabel().getText());
 
 
     }
