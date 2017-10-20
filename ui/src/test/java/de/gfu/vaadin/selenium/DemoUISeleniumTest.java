@@ -10,7 +10,7 @@ import static org.junit.Assert.assertEquals;
  *
  * Created by MBecker on 07.10.2017.
  */
-public class SeleniumTest {
+public class DemoUISeleniumTest {
 
     private static FirefoxDriver driver;
 
